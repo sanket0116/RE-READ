@@ -10,14 +10,14 @@ import { AuthModule } from '@angular/fire/auth';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, RegisterComponent, AngularFireAuthModule, AuthModule ],
+  imports: [RouterOutlet, LoginComponent, RegisterComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'Re-read';
-  constructor(private router: Router) {
-    this.router.navigate(['login']); 
+  constructor() {
   }
+  
 }
 AngularFireModule.initializeApp(environment.firebaseConfig);

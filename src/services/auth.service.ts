@@ -5,6 +5,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, si
 import { from, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../environments/environment'; 
+import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 const app = initializeApp(environment.firebaseConfig);
 const auth = getAuth(app);
@@ -14,27 +15,39 @@ const auth = getAuth(app);
 })
 export class AuthService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    // Restore user state from local storage on service initialization
     if (isPlatformBrowser(this.platformId)) {
-      const user = localStorage.getItem('authUser');
-      if (user) {
-        // Assume that you might need to manually set this state in your app's state management (if applicable)
-        console.log('User restored from local storage:', JSON.parse(user));
-        // You can set the user state in your application state management here
-      }
+      setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+          this.checkAuthState(); // Call the method to check the authentication state
+        })
+        .catch((error) => {
+          console.error('Error setting authentication persistence:', error);
+        });
     }
   }
+  
+  private checkAuthState(): void {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        localStorage.setItem('authUser', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('authUser');
+      }
+    });
+  }
+  
+  
 
   login(email: string, password: string) {
     return from(signInWithEmailAndPassword(auth, email, password)).pipe(
       tap((userCredential) => {
         if (isPlatformBrowser(this.platformId)) {
-          // Store user info in local storage upon successful login
-          localStorage.setItem('authUser', JSON.stringify(userCredential.user));
+          localStorage.setItem('authUser', JSON.stringify(userCredential.user)); // Store user data
         }
       })
     );
   }
+  
   
   register(email: string, password: string) {
     return from(createUserWithEmailAndPassword(auth, email, password)).pipe(

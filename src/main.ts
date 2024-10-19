@@ -4,7 +4,8 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideRouter } from '@angular/router'; 
 import { environment } from './environments/environment'; 
-import { routes } from './app/app.routes'; 
+import { routes } from './app/app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; 
 
 
 bootstrapApplication(AppComponent, {
@@ -13,7 +14,7 @@ bootstrapApplication(AppComponent, {
 
     provideAuth(() => getAuth()),
 
-    provideRouter(routes),
+    provideRouter(routes), provideAnimationsAsync('noop'),
   ]
 }).catch(err => console.error(err));
 

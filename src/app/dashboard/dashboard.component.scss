@@ -1,7 +1,114 @@
-.heading{
-color:blueviolet;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
+@import '../../styles/variables'; 
+
+.dashboard-container {
+    max-width: 1200px;                  // Set a maximum width for the container
+    margin: 0 auto;                     // Center the container horizontally
+    padding: 20px;                      // Add padding around the content
+    font-family: $font-family;          // Use the defined font family
+    background-color: $background-color; // Background color
+    color: $text-color;                 // Text color
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Box shadow for depth
+    border-radius: 10px;                // Rounded corners
+    transition: background-color 0.3s ease; // Smooth background transition
+
+    header {
+        text-align: center;              // Center header text
+        margin-bottom: 30px;             // Margin below the header
+
+        h1 {
+            color: $primary-color;        // Primary color for the header
+            font-size: $font-large;       // Large font size
+            margin-bottom: 10px;          // Margin below the header text
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); // Text shadow
+        }
+    }
+
+    .content-wrapper {
+        margin-bottom: 30px;             // Margin below content wrapper
+
+        h2 {
+            color: $primary-color;        // Color for h2 headings
+            margin: 20px 0 15px;         // Margins for h2
+        }
+
+        .search-field {
+            width: 100%;                  // Full width for the search field
+            margin-bottom: 20px;          // Margin below the search field
+        }
+
+        .book-grid {
+            display: grid;                // Use grid layout for books
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); // Responsive columns
+            gap: 20px;                    // Space between book cards
+
+            .book-card {
+                transition: transform 0.3s; // Smooth transform transition
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Box shadow for book card
+
+                &:hover {
+                    transform: translateY(-5px); // Lift effect on hover
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // Increased shadow on hover
+                }
+
+                img {
+                    border-radius: 4px;        // Rounded corners for book images
+                }
+
+                h3 {
+                    font-size: $font-medium;   // Medium font size for titles
+                    color: $black-color;        // Black color for text
+                    margin: 10px 0 5px;        // Margin for title
+                }
+
+                .price {
+                    color: $primary-color;     // Primary color for price
+                    font-weight: bold;          // Bold font for price
+                    font-size: $font-medium;    // Medium font size for price
+                }
+            }
+        }
+
+        .sell-cta {
+            background-color: $grey-light; // Background color for call to action
+            color: $text-color;             // Text color for CTA
+            padding: 20px;                  // Padding for CTA
+            border-radius: 8px;             // Rounded corners
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Box shadow for CTA
+            transition: transform 0.3s;     // Smooth transition
+
+            &:hover {
+                transform: translateY(-3px); // Lift effect on hover
+            }
+        }
+    }
+
+    footer {
+        text-align: center;               // Center align footer text
+        padding-top: 20px;                // Padding on top
+        color: $grey;                      // Color for footer text
+    }
+
+    .categories-list {
+        display: flex;                     // Flex layout for categories
+        flex-wrap: nowrap;                 // No wrapping for category items
+        justify-content: space-around;     // Space evenly between items
+    
+        a {
+            flex: 1;                       // Flex grow for category items
+            text-align: center;            // Center text in category links
+            margin: 0 10px;                // Margin for spacing
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        .search-field {
+            margin-bottom: 10px;          // Adjust margin for smaller screens
+        }
+
+        .book-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); // Adjust grid layout for smaller screens
+        }
+    }
 }
